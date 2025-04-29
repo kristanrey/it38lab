@@ -8,60 +8,59 @@
             background-color: #f1f1f1;
         }
         .container {
-    width: 320px;
-    padding: 20px;
-    background: linear-gradient(to bottom, #f7c9d7, #003b36);
-    margin: 100px auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-form {
-    width: 100%;
-}
-label {
-    display: block;
-    text-align: left;
-    margin-top: 10px;
-    font-size: 14px;
-    color: #333;
-}
-input {
-    width: calc(100% - 20px); /* Keep input aligned properly */
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    outline: none;
-    display: block;
-    margin-bottom: 10px;
-}
-button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 15px;
-    background-color: #66ff99;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-button:hover {
-    background-color: #33cc66;
-}
-a button {
-    background-color: #6ec1e4;
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-}
-a button:hover {
-    background-color: #4aa3d2;
-}
-
-
+            width: 320px;
+            padding: 20px;
+            background: linear-gradient(to bottom, #f7c9d7, #003b36);
+            margin: 100px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            width: 100%;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background-color: #66ff99;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #33cc66;
+        }
+        .login-link {
+            display: inline-block;
+            background-color: #6ec1e4;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 5px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .login-link:hover {
+            background-color: #4aa3d2;
+        }
     </style>
 </head>
 <body>
@@ -84,24 +83,35 @@ a button:hover {
         <button type="submit" name="register">Register</button>
     </form>
     <br>
-    <p style="text-align:center;">Already have an account? <a href="login.php"><button>Login</button></a></p>
+    <p style="text-align:center;">Already have an account? 
+        <a href="login.php" class="login-link">Login</a>
+    </p>
 </div>
 
 <?php
+// Connect to database
 $conn = new mysqli('localhost', 'root', '', 'user_db');
 
-if (isset($_POST['register'])) {
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
+// Handle form submission
+if (isset($_POST['register'])) {
+    $firstname = $conn->real_escape_string($_POST['firstname']);
+    $lastname = $conn->real_escape_string($_POST['lastname']);
+    $username = $conn->real_escape_string($_POST['username']);
+    $password = $conn->real_escape_string($_POST['password']);
+
+    // Insert into users table
     $query = "INSERT INTO users (firstname, lastname, username, password) VALUES ('$firstname', '$lastname', '$username', '$password')";
+
     if ($conn->query($query)) {
         echo "<script>alert('Registration successful!');</script>";
-        header('Location: login.php');
+        header('Refresh:1; URL=login.php');
     } else {
-        echo "<script>alert('Error occurred!');</script>";
+        echo "<script>alert('Error occurred: " . $conn->error . "');</script>";
     }
 }
 ?>
