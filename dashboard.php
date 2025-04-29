@@ -1,3 +1,11 @@
+<?php
+session_start();
+// Optional: Protect dashboard page (redirect if not logged in)
+// if (!isset($_SESSION['username'])) {
+//     header('Location: login.php');
+//     exit();
+// }
+?>
 
 <!DOCTYPE html>
 <html>
@@ -9,8 +17,6 @@
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
         }
-
-        /* Sidebar */
         .sidebar {
             width: 220px;
             height: 100vh;
@@ -19,9 +25,8 @@
             padding-top: 20px;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         }
-        /* Sidebar Logo */
         .sidebar-logo {
-            width: 70px; /* Adjust logo size */
+            width: 70px;
             height: auto;
             margin: 0 auto 10px auto;
             display: block;
@@ -41,16 +46,12 @@
         .sidebar a:hover {
             background: linear-gradient(to right, #d084ff, #9a3cff);
         }
-
-        /* Main Content */
         .content {
             margin-left: 220px;
             padding: 20px;
-            background-color: #FAC99B; /* Updated solid background */
+            background-color: #FAC99B;
             min-height: 100vh;
         }
-
-        /* Header */
         .header {
             display: flex;
             justify-content: space-between;
@@ -60,47 +61,44 @@
             font-weight: bold;
             background-color: #F5F5F5;
             margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
-        /* Header Text */
         .header-text {
             flex: 1;
             text-align: center;
-            margin-right: 50px; /* Keeps text centered */
+            margin-right: 50px;
         }
-
-        /* Icon Container */
         .icon-container {
             display: flex;
             gap: 15px;
+            align-items: center;
         }
         .icon-container img {
             width: 25px;
             cursor: pointer;
         }
-
-        /* Grid Container */
+        /* Make the logout icon a link */
+        .icon-container a img {
+            width: 25px;
+            height: auto;
+        }
         .card-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-gap: 20px;
             margin-top: 20px;
         }
-
-        /* Individual Cards */
         .card {
             background-color: white;
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-            height: 220px; /* Fixed height for all cards */
+            height: 220px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-
         .card h3 {
             margin-top: 0;
             margin-bottom: 10px;
@@ -108,7 +106,7 @@
         }
         .card img {
             width: 90%;
-            height: 130px; /* Consistent image height */
+            height: 130px;
             border-radius: 8px;
             margin: 0 auto;
         }
@@ -116,7 +114,7 @@
 </head>
 <body>
 
-<!-- Sidebar Section -->
+<!-- Sidebar -->
 <div class="sidebar">
     <img src="logo.png" alt="Logo" class="sidebar-logo">
     <a href="#">Home</a>
@@ -126,7 +124,7 @@
     <a href="reports.php">Reports</a>
 </div>
 
-<!-- Main Content Section -->
+<!-- Main Content -->
 <div class="content">
     <div class="header">
         <div class="header-text">
@@ -135,11 +133,13 @@
         <div class="icon-container">
             <img src="icon-email.png" alt="Messages">
             <img src="icon-bell.png" alt="Notifications">
-            <img src="icon-logout.png" alt="Logout">
+            <!-- Logout Icon Link -->
+            <a href="logout.php" title="Logout">
+                <img src="icon-logout.png" alt="Logout">
+            </a>
         </div>
     </div>
 
-    <!-- Card Container Section -->
     <div class="card-container">
         <div class="card">
             <h3>Order status</h3>
