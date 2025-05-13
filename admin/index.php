@@ -1,3 +1,8 @@
+<?php
+include '../includes/db_connection.php'; // or 'db_connection.php' if same folder
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
